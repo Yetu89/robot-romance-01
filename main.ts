@@ -12,11 +12,15 @@ const TEXT =
 // Code points, so an astral character counts as one.
 const LENGTH = [...TEXT].length;
 
+// The bounty caps the line at 200 characters; keep the cap in one place
+// so the check and its message can never drift apart.
+const MAX_LENGTH = 200;
+
 // Every rule violation is collected first so the failure message lists all of them.
 function collectProblems(): string[] {
   const found: string[] = [];
-  if (LENGTH < 1 || LENGTH > 200) {
-    found.push(`entry must be 1-200 characters, got ${LENGTH}`);
+  if (LENGTH < 1 || LENGTH > MAX_LENGTH) {
+    found.push(`entry must be 1-${MAX_LENGTH} characters, got ${LENGTH}`);
   }
   if (TEXT.includes("\n") || TEXT.includes("\r")) {
     found.push("entry must be a single line with no line breaks");
